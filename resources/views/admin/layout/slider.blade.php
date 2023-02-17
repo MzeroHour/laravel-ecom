@@ -106,13 +106,20 @@
                  style="background: white !important; color: #4B49AC !important;"
                 @endif
                 class="nav-link" href="{{ url('admin/categories') }}">Categories</a></li>
+                <li class="nav-item"> <a
+                    @if (Session::get('page')=='brands')
+                    style="background: #7DA0FA !important; color: white !important;"
+                    @else
+                     style="background: white !important; color: #4B49AC !important;"
+                    @endif
+                    class="nav-link" href="{{ url('admin/products') }}">Brands</a></li>
             <li class="nav-item"> <a
                 @if (Session::get('page')=='products')
                 style="background: #7DA0FA !important; color: white !important;"
                 @else
                  style="background: white !important; color: #4B49AC !important;"
                 @endif
-                class="nav-link" href="{{ url('admin/products') }}">Update Details</a></li>
+                class="nav-link" href="{{ url('admin/products') }}">Products</a></li>
             {{-- <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li> --}}
           </ul>
         </div>
