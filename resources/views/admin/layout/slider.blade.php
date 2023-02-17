@@ -112,7 +112,7 @@
                     @else
                      style="background: white !important; color: #4B49AC !important;"
                     @endif
-                    class="nav-link" href="{{ url('admin/products') }}">Brands</a></li>
+                    class="nav-link" href="{{ url('admin/brands') }}">Brands</a></li>
             <li class="nav-item"> <a
                 @if (Session::get('page')=='products')
                 style="background: #7DA0FA !important; color: white !important;"
