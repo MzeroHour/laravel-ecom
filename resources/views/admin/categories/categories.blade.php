@@ -27,7 +27,7 @@
                         <thead>
                           <tr>
                             <th>
-                              Section Id
+                              Category Id
                             </th>
                             <th>
                               Category
@@ -99,7 +99,7 @@
                                     {{-- <a title="Section" class="confirmDelete" href="{{ url('admin/delete-section/'.$category['id']) }}">
                                         <i style="font-size: 25px; color: #ff595e; text-align: center; display: inline;"  class="mdi mdi-close-box "></i>
                                       </a> --}}
-                                    <a module_id="{{$category['id']}}"  class="confirmDelete" href="javascript:void(0)">
+                                    <a module_id="{{$category['id']}}"  class="confirmDeleteCategory" href="javascript:void(0)">
                                         <i style="font-size: 25px; color: #ff595e; text-align: center; display: inline;"  class="mdi mdi-close-box "></i>
                                       </a>
 

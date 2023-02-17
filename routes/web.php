@@ -76,6 +76,10 @@ Route::prefix('admin/')->namespace('App\Http\Controllers\Admin')->group(function
 
         //View Brands
         Route::get('brands', 'BrandController@brands');
+        //Ajax Brands Status
+        Route::post('update-brand-status', 'BrandController@updateBrandStatus');
+        //Delete section with ajax
+        Route::get('delete-brand/{id}', 'BrandController@deleteBrand');
 
         //Categories
         Route::get('categories', 'CategoryController@categories');

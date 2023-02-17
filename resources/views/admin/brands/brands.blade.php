@@ -42,38 +42,38 @@
                           </tr>
                         </thead>
                         <tbody>
-                            @foreach ($sections as $section )
+                            @foreach ($brands as $brand )
                             <tr>
                                 <td>
-                                  {{ $section['id'] }}
+                                  {{ $brand['id'] }}
                                 </td>
                                 <td>
-                                    {{ $section['name'] }}
+                                    {{ $brand['name'] }}
                                 </td>
 
 
                                 <td>
-                                    @if ($section['status']==1)
-                                    <a class="updateSectionStatus" id="section-{{ $section['id'] }}" section_id=" {{ $section['id'] }}" href="javascript:void(0)">
+                                    @if ($brand['status']==1)
+                                    <a class="updateBrandStatus" id="brand-{{ $brand['id'] }}" brand_id=" {{ $brand['id'] }}" href="javascript:void(0)">
                                         <i style="font-size: 25px;  color: #1982c4; text-align: center; display: inline;" class="mdi mdi-bookmark-check" status="Active"></i>
                                     </a>
                                     @else
-                                    <a class="updateSectionStatus" id="section-{{ $section['id'] }}" section_id=" {{ $section['id'] }}" href="javascript:void(0)">
+                                    <a class="updateBrandStatus" id="brand-{{ $brand['id'] }}" brand_id=" {{ $brand['id'] }}" href="javascript:void(0)">
                                         <i  style="font-size: 25px; color: #6c757d; text-align: center; display: inline;" class="mdi mdi-bookmark-outline" status="Inactive"></i>
                                     </a>
                                     @endif
                                 </td>
 
                                 <td>
-                                    <a href="{{ url('admin/add-edit-section/'.$section['id']) }}">
+                                    <a href="{{ url('admin/add-edit-brand/'.$brand['id']) }}">
                                         <i style="font-size: 25px; color: #1982c4; text-align: center; display: inline;"  class="mdi mdi-pencil-box "></i>
                                       </a>
                                     {{-- <a title="Section" class="confirmDelete" href="{{ url('admin/delete-section/'.$section['id']) }}">
                                         <i style="font-size: 25px; color: #ff595e; text-align: center; display: inline;"  class="mdi mdi-close-box "></i>
                                       </a> --}}
-                                    <a module_id="{{$section['id']}}"  class="confirmDeleteSection" href="javascript:void(0)">
+                                    <a module_id="{{$brand['id']}}"  class="confirmDeleteBrand" href="javascript:void(0)">
                                         <i style="font-size: 25px; color: #ff595e; text-align: center; display: inline;"  class="mdi mdi-close-box "></i>
-                                      </a>
+                                    </a>
 
                                 </td>
                             </tr>

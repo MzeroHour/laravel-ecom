@@ -125,6 +125,35 @@ $(document).ready(function(){
         });
     });
 
+    //Update Brand Status
+    $(document).on('click', ".updateBrandStatus", function(){
+        var status=$(this).children("i").attr("status");
+        var brand_id=$(this).attr('brand_id');
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+
+            type: 'post',
+            url: '/admin/update-brand-status',
+            data: {status:status, brand_id:brand_id},
+
+            success:function(resp){
+                if(resp['status']==0){
+                    $('#brand-'+resp.brand_id).html("<i style='font-size: 25px; color: #6c757d; text-align: center; display: inline;' class='mdi mdi-bookmark-outline' status='Inactive'></i>");
+                }
+                else if(resp['status']==1){
+                    $("#brand-"+resp.brand_id).html("<i style='font-size: 25px; color: #1982c4; text-align: center; display: inline;' class='mdi mdi-bookmark-check' status='Active'></i>");
+                     //$("a.updateAdminStatus").find("i").removeClass("mdi mdi-bookmark-outline").addClass("mdi mdi-bookmark-check");
+                }
+            },
+            error:function(){
+                alert('Errors');
+            }
+        });
+    });
+
     //Confirm Box Section Delete
 
     // $(".confirmDelete").click(function(){
@@ -137,7 +166,7 @@ $(document).ready(function(){
     // });
 
     // Delete Section row with id
-    $('.confirmDelete').click(function(){
+    $('.confirmDeleteSection').click(function(){
         var module_id= $(this).attr("module_id");
         var trObj = $(this);
             Swal.fire({
@@ -176,8 +205,48 @@ $(document).ready(function(){
     });
 
 
-    //Delete Category with Ajax
-    $('.confirmDelete').click(function(){
+    //Delete Brand row with id
+    $('.confirmDeleteBrand').click(function(){
+        var module_id= $(this).attr("module_id");
+        var trObj = $(this);
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                        $.ajax({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            type: 'GET',
+                            url: '/admin/delete-brand/'+module_id,
+                            data: {module_id:module_id},
+                            success:function(resp){
+                                    Swal.fire(
+                                        'Deleted!',
+                                        'Your file has been deleted.',
+                                        'success'
+                                    ),
+                                    trObj.parents("tr").remove();
+                            },
+                            error:function(){
+                                alert("Error");
+                            }
+                        });
+
+                }
+              });
+
+    });
+
+
+    //Delete Category with id
+    $('.confirmDeleteCategory').click(function(){
         var module_id= $(this).attr("module_id");
         var trObj = $(this);
             Swal.fire({
@@ -260,7 +329,6 @@ $(document).ready(function(){
             }
         })
     });
-
 
 
 });
