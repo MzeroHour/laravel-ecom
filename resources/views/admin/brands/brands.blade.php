@@ -6,12 +6,12 @@
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Section</h4>
+                    <h4 class="card-title">Brand</h4>
                     <p class="card-description">
                       Add class <code>.table-bordered</code>
                     </p>
 
-                    <a href="{{ url('admin/add-edit-section') }}" class="btn btn-icon-text btn-primary" style="float: right;"> <i class="ti-file btn-icon-prepend"></i>Add Section</a>
+                    <a href="{{ url('admin/add-edit-brand') }}" class="btn btn-icon-text btn-primary" style="float: right;"> <i class="ti-file btn-icon-prepend"></i>Add Brand</a>
 
                     @if (Session::has('success_message'))
                     <div class="alert alert-success alert-dismissble fade show" style="width: 50%">

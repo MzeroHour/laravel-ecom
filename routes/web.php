@@ -80,6 +80,7 @@ Route::prefix('admin/')->namespace('App\Http\Controllers\Admin')->group(function
         Route::post('update-brand-status', 'BrandController@updateBrandStatus');
         //Delete section with ajax
         Route::get('delete-brand/{id}', 'BrandController@deleteBrand');
+        Route::match(['get', 'post'], 'add-edit-brand/{id?}', 'BrandController@addEditBrand');
 
         //Categories
         Route::get('categories', 'CategoryController@categories');
