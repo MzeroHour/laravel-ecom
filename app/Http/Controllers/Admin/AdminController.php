@@ -183,6 +183,7 @@ class AdminController extends Controller
             }
             $vendorDetails = Vendor::where('id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
         }
+
         //Vendero Business Detail
         else if($slug=='business'){
 
@@ -337,7 +338,8 @@ class AdminController extends Controller
     //Vendors View
     public function viewVendorDetails($id) {
         $vendorDetails = Admin::with('vendorPersonal', 'vendorBusiness', 'vendorBank')->where('id', $id)->first();
-        $vendorDetails = json_decode(json_encode($vendorDetails), true);
+        // $vendorDetails = json_decode(json_encode($vendorDetails), true);
+        $vendorDetails = json_decode($vendorDetails, true);
         return view('admin.admins.view_vendor_details')->with(compact('vendorDetails'));
 
     }

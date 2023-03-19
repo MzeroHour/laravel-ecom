@@ -63,7 +63,7 @@ class BrandController extends Controller
                 'brand_name' => 'required|regex:/^[\pL\s\-]+$/u',
             ];
             $customMessage = [
-                'brand_name.required' => 'Name is Required!',
+                'brand_name.required' => 'Brand Name is Required!',
                 'brand_name.regex' => 'Name is not allow Special Charater & Numerice!',
 
             ];
