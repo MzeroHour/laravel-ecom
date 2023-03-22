@@ -154,6 +154,37 @@ $(document).ready(function(){
         });
     });
 
+
+    //Updae Product Stats
+    $(document).on('click', ".updateProductStatus", function(){
+        var status=$(this).children("i").attr("status");
+        var product_id=$(this).attr("product_id");
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'post',
+            url: '/admin/update-product-status',
+            data: {status:status, product_id:product_id},
+
+            success:function(resp){
+
+
+                if(resp['status']==0){
+                    $('#product-'+resp.product_id).html("<i style='font-size: 25px; color: #6c757d; text-align: center; display: inline;' class='mdi mdi-bookmark-outline' status='Inactive'></i>");
+                }
+                else if(resp['status']==1){
+                    $("#product-"+resp.product_id).html("<i style='font-size: 25px; color: #1982c4; text-align: center; display: inline;' class='mdi mdi-bookmark-check' status='Active'></i>");
+                     //$("a.updateAdminStatus").find("i").removeClass("mdi mdi-bookmark-outline").addClass("mdi mdi-bookmark-check");
+                }
+            },
+            error:function(){
+                alert('Errors');
+            }
+        })
+    });
+
     //Confirm Box Section Delete
 
     // $(".confirmDelete").click(function(){
@@ -265,6 +296,45 @@ $(document).ready(function(){
                             },
                             type: 'GET',
                             url: '/admin/delete-category/'+module_id,
+                            data: {module_id:module_id},
+                            success:function(resp){
+                                    Swal.fire(
+                                        'Deleted!',
+                                        'Your file has been deleted.',
+                                        'success'
+                                    ),
+                                    trObj.parents("tr").remove();
+                            },
+                            error:function(){
+                                alert("Error");
+                            }
+                        });
+
+                }
+              });
+
+    });
+
+    //Delete Product with id
+    $('.confirmDeleteProduct').click(function(){
+        var module_id= $(this).attr("module_id");
+        var trObj = $(this);
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                        $.ajax({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            type: 'GET',
+                            url: '/admin/delete-product/'+module_id,
                             data: {module_id:module_id},
                             success:function(resp){
                                     Swal.fire(

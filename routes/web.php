@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,6 +91,14 @@ Route::prefix('admin/')->namespace('App\Http\Controllers\Admin')->group(function
         Route::get('append-categories-level', 'CategoryController@appendCategoryLevel');
         //Delete Category with ajax
         Route::get('delete-category/{id}', 'CategoryController@deleteCategory');
+
+        //Products
+        Route::get('products', 'ProductController@products');
+        Route::post('update-product-status', 'ProductController@updateProductStatus');
+        //Delete Product with ajax
+        Route::get('delete-product/{id}', 'ProductController@deleteProduct');
+
+
 
 
         //logout
