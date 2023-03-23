@@ -97,6 +97,8 @@ Route::prefix('admin/')->namespace('App\Http\Controllers\Admin')->group(function
         Route::post('update-product-status', 'ProductController@updateProductStatus');
         //Delete Product with ajax
         Route::get('delete-product/{id}', 'ProductController@deleteProduct');
+        Route::match(['get', 'post'], 'add-edit-product/{id?}', 'ProductController@addEditProdcut');
+
 
 
 

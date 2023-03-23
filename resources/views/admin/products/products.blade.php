@@ -39,6 +39,15 @@
                               Product Color
                             </th>
                             <th>
+                              Section
+                            </th>
+                            <th>
+                                Category Name
+                              </th>
+                            <th>
+                              Added By
+                            </th>
+                            <th>
                               Status
                             </th>
                             <th>
@@ -61,6 +70,19 @@
                                 </td>
                                 <td>
                                     {{ $product['product_color']}}
+                                </td>
+                                <td>
+                                    {{ $product['section']['name']}}
+                                </td>
+                                <td>
+                                    {{ $product['category']['category_name']}}
+                                </td>
+                                <td>
+                                    @if($product['admin_type']=='vendor')
+                                        <a target="_blank" href="{{ url('admin/view-vendor-details/'.$product['admin_id']) }}">{{ ucfirst($product['admin_type'])  }}</a>
+                                    @else
+                                        {{ ucfirst($product['admin_type'])}}
+                                    @endif
                                 </td>
 
                                 <td>

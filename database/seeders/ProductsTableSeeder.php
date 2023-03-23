@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Product;
 
-class ProdcutsTableSeeder extends Seeder
+class ProductsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -22,6 +22,7 @@ class ProdcutsTableSeeder extends Seeder
                 'section_id'=>2,
                 'category_id'=>7,
                 'brand_id'=>8,
+                'admin_id'=>2,
                 'vendor_id'=>1,
                 'admin_type'=>'vendor',
                 'product_name'=>'iPhone',
@@ -41,10 +42,11 @@ class ProdcutsTableSeeder extends Seeder
             ],
             [
                 'id'=>2,
-                'section_id'=>2,
+                'section_id'=>1,
                 'category_id'=>8,
                 'brand_id'=>2,
-                'vendor_id'=>1,
+                'admin_id'=>1,
+                'vendor_id'=>0,
                 'admin_type'=>'superadmin',
                 'product_name'=>'Black Cusual T-Shirt',
                 'product_code'=>'RC001',
@@ -57,7 +59,7 @@ class ProdcutsTableSeeder extends Seeder
                 'description'=>'',
                 'meta_title'=>'',
                 'meta_description'=>'',
-                'meta_metakeywords'=>'',
+                'meta_keywords'=>'',
                 'is_featured'=>'Yes',
                 'status'=>1
             ],
