@@ -83,11 +83,19 @@
                                         @foreach ($categories as $section)
                                             <optgroup label="{{ $section['name'] }}"> </optgroup>
                                             @foreach ($section['categories'] as $category)
-                                                <option value="{{ $category['id'] }}">&nbsp;&nbsp;&nbsp;
-                                                    --&nbsp;{{ $category['category_name'] }}
+                                                <option style="font-weight: 600; color: #777;"
+                                                @if(!empty($product['category_id']==$category['id']))
+                                                    selected=""
+                                                @endif
+                                                value="{{ $category['id'] }}">&nbsp;&nbsp;&nbsp;
+                                                    &nbsp;{{ $category['category_name'] }}
                                                 </option>
                                                 @foreach ($category['subcategories'] as $subcategory)
-                                                <option value="{{ $subcategory['id'] }}">&nbsp;&nbsp;&nbsp;
+                                                <option
+                                                @if(!empty($product['category_id']==$subcategory['id']))
+                                                    selected=""
+                                                @endif
+                                                value="{{ $subcategory['id'] }}">&nbsp;&nbsp;&nbsp;&emsp;
                                                     --&nbsp;{{ $subcategory['category_name'] }}
                                                 </option>
                                                 @endforeach
@@ -102,7 +110,11 @@
                                         <option value="">Select</option>
 
                                         @foreach ($brands as $brand)
-                                            <option value="{{ $brand['id'] }}">{{ $brand['name'] }}</option>
+                                            <option
+                                            @if(!empty($product['brand_id']==$brand['id']))
+                                                selected=""
+                                            @endif
+                                            value="{{ $brand['id'] }}">{{ $brand['name'] }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -178,20 +190,20 @@
                                     <input type="file" class="form-control" id="product_image" name="product_image">
                                     @if (!empty($product['product_image']))
                                     <a target="_blank" href="{{ url('/admin/images/products/large/'.$product['product_image']) }}">View Image</a>&nbsp;| &nbsp;
-                                    <a href="javascript:void(0)" class="comfirmDelete" module="product-image" moduleid="{{ $product['id'] }}">Delete Image</a>
+                                    <a href="javascript:void(0)" class="confirmProductImageDelete" module="product-image" moduleid="{{ $product['id'] }}">Delete Image</a>
                                     @endif
                                 </div>
                                 <div class="form-group">
                                     <label for="product_video">Product Video (Recommed Size: Less then 20MB)</label>
                                     <input type="file" class="form-control" id="product_video" name="product_video">
                                     @if (!empty($product['product_video']))
-                                    <a target="_blank" href="{{ url('/admin/videos/products/'.$product['product_video']) }}">View Image</a>&nbsp;| &nbsp;
-                                    <a href="javascript:void(0)" class="comfirmDelete" module="product-video" moduleid="{{ $product['id'] }}">Delete Video</a>
+                                    <a target="_blank" href="{{ url('/admin/video/products/'.$product['product_video']) }}">View Video</a>&nbsp;| &nbsp;
+                                    <a href="javascript:void(0)" class="confirmProductVideoDelete" module="product-video" moduleid="{{ $product['id'] }}">Delete Video</a>
                                     @endif
                                 </div>
                                 <div class="form-group">
                                     <label for="product_name">Product  Description</label>
-                                    <textarea type="text" class="form-control" name="description",  rows="5"></textarea>
+                                    <textarea type="text" class="form-control" name="description",  rows="5">{{ $product['description'] }}</textarea>
                                 </div>
 
                                 <div class="form-group">

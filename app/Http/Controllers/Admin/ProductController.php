@@ -10,11 +10,16 @@ use App\Models\Section;
 use Illuminate\Http\Request;
 use Image;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
 {
     //
     public function products(){
+
+        //for nav item acitve color
+       Session::put('page', 'products');
+
         $products=Product::with(['section'=>function($query){
             $query->select(['id', 'name']);
         }, 'category'=>function($query){
@@ -90,11 +95,7 @@ class ProductController extends Controller
             ];
             $this->validate($request, $rule, $customMessage);
 
-            //Upload Product Image after Resize
-            //Small : 250 x 250
-            //Medium : 500 x 500
-            //Large : 1000 x 1000
-
+            //Upload Product Image after Resize --- Small : 250 x 250 --- Medium : 500 x 500 --- Large : 1000 x 1000
             if($request->hasFile('product_image')){
                 $image_tmp = $request->file('product_image');
                 if($image_tmp->isValid()){
@@ -115,7 +116,26 @@ class ProductController extends Controller
                     $product->product_image = $imageName;
 
                 }
+            }
 
+            if(request()->hasFile('product_video')){
+                $video_temp = $request->file('product_video');
+                if($video_temp->isValid()){
+                    //Get video Extendion
+
+                    $extendion = $video_temp->getClientOriginalExtension();
+                    $videoName = rand(1111, 9999).'.'.$extendion;
+                    $videoPath = 'admin/video/products/';
+                    $video_temp->move($videoPath, $videoName);
+
+                    //Insert Video in Product table
+                    $product->product_video = $videoName;
+
+
+
+                    //Upload Video
+
+                }
             }
 
 
@@ -171,6 +191,59 @@ class ProductController extends Controller
         $brands=Brand::where('status', 1)->get()->toArray();
         //dd ($categories);
        return view('admin.products.add_edit_product')->with(compact('title', 'categories', 'brands', 'product'));
+
+    }
+
+    //Delete Product Image
+    public function deleteProductImage($id){
+        //Get Product Image
+        $productImage = Product::select('product_image')->where('id', $id)->first();
+
+        //Get Product Image Path
+        $smallImagePath = 'admin/images/products/small/';
+        $mediumImagePath = 'admin/images/products/medium/';
+        $largeImagePath = 'admin/images/products/large/';
+
+        //Delete Product Image
+        if(file_exists($smallImagePath.$productImage->product_image)){
+            unlink($smallImagePath.$productImage->product_image);
+        }
+        if(file_exists($mediumImagePath.$productImage->product_image)){
+            unlink($mediumImagePath.$productImage->product_image);
+        }
+        if(file_exists($largeImagePath.$productImage->product_image)){
+            unlink($largeImagePath.$productImage->product_image);
+        }
+
+        //Delete Product Image from product table
+        Product::where('id', $id)->update(['product_image'=>'']);
+
+        $message = "Product Image has been deleted Successfully";
+
+
+        //return response()->json(['success_message' => $message]);
+        return redirect()->back()->with('success_message', $message);
+        // dd(session()->all());
+    }
+    public function deleteProductVideo($id){
+        $productVideo= Product::select('product_video')->where('id', $id)->first();
+
+        //get path
+        $path_video= 'admin/video/products/';
+
+        //Delete Product Video in folder if exists
+        if(file_exists($path_video.$productVideo->product_video)){
+            unlink($path_video.$productVideo->product_video);
+        }
+
+        //Delete Product Video from product table
+        Product::where('id', $id)->update(['product_video'=>'']);
+
+        $message = "Product Video has been deleted Successfully";
+
+
+        //return response()->json(['success_message' => $message]);
+        return redirect()->back()->with('success_message', $message);
 
     }
 

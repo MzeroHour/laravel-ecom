@@ -39,6 +39,9 @@
                               Product Color
                             </th>
                             <th>
+                                Product Image
+                            </th>
+                            <th>
                               Section
                             </th>
                             <th>
@@ -70,6 +73,13 @@
                                 </td>
                                 <td>
                                     {{ $product['product_color']}}
+                                </td>
+                                <td>
+                                    @if (!empty($product['product_image']))
+                                    <img style="display: block; margin: 0 auto; width: 80px; height: 80px;" src="{{ asset('admin/images/products/small/'.$product['product_image']) }}" alt="{{ $product['product_image'] }}">
+                                    @else
+                                      <img  style="display: block; margin: 0 auto; width: 80px; height: 80px;"  src="{{ asset('admin/images/products/no_image.jpg') }}" alt="{{ asset('admin/images/products/no_image.png') }}">
+                                    @endif
                                 </td>
                                 <td>
                                     {{ $product['section']['name']}}
