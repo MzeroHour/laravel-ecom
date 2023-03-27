@@ -46,12 +46,18 @@ class ProductController extends Controller
      //Delete Product with ajax
      public function deleteProduct($id){
         //delete Image-----
-           $productDeleteImage=Product::where('id', $id)->first();
-           if(!empty($productDeleteImage['product_image'])){
-               $oldImagePath = 'admin/images/products/'.$productDeleteImage->product_image;
+           $productDeleteImageVideo=Product::where('id', $id)->first();
+           if(!empty($productDeleteImageVideo['product_image'])){
+               $oldImagePath = 'admin/images/products/'.$productDeleteImageVideo->product_image;
                @unlink($oldImagePath);
            }
-           //dd($categoryDeleteImage);
+           //dd($productDeleteImageVideo);
+
+           //Delete Video
+           if(!empty($productDeleteImageVideo['product_video'])){
+                $oldVideoPath= 'admin/video/products/'.$productDeleteImageVideo->product_video;
+                @unlink($oldVideoPath);
+           }
 
          Product::where('id', $id)->delete();
 
@@ -225,6 +231,7 @@ class ProductController extends Controller
         return redirect()->back()->with('success_message', $message);
         // dd(session()->all());
     }
+
     public function deleteProductVideo($id){
         $productVideo= Product::select('product_video')->where('id', $id)->first();
 
@@ -244,6 +251,19 @@ class ProductController extends Controller
 
         //return response()->json(['success_message' => $message]);
         return redirect()->back()->with('success_message', $message);
+
+    }
+
+    //Product Attributes
+    public function addAttributes(Request $request, $id){
+        $title = "Product Attributes";
+
+        if($request->isMethod('post')){
+            $data= $request->all();
+            return ($data);
+        }
+        $product = Product::find($id);
+        return view('admin.attributes.add_edit_attributes')->with(compact('product', 'title'));
 
     }
 

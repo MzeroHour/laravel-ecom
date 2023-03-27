@@ -238,8 +238,8 @@
                                 </div>
                                  <div class="form-group">
                                     <label for="meta_keywords">Featured Item</label>
-                                    <input type="checkbox" name="is_featured", id="is_featured" value="Yes"
-                                    @if(!empty($product['is_featured']) && $product['is_featured'=='Yes'])
+                                    <input type="checkbox" name="is_featured" id="is_featured" value="Yes"
+                                    @if(!empty($product['is_featured']) && $product['is_featured']=="Yes")
                                     checked=""
                                     @endif
                                     >
