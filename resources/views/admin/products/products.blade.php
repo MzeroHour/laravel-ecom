@@ -112,7 +112,7 @@
                                     <a href="{{ url('admin/add-edit-product/'.$product['id']) }}">
                                         <i style="font-size: 25px; color: #1982c4; text-align: center; display: inline;"  class="mdi mdi-pencil-box "></i>
                                       </a>
-                                      <a href="{{ url('admin/add-attributes/'.$product['id']) }}">
+                                      <a href="{{ url('admin/add-edit-attributes/'.$product['id']) }}">
                                         <i style="font-size: 25px; color: #1982c4; text-align: center; display: inline;"  class="mdi mdi-plus-box "></i>
                                       </a>
                                     {{-- <a title="Section" class="confirmDelete" href="{{ url('admin/delete-section/'.$product['id']) }}">

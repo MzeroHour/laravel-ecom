@@ -20,7 +20,7 @@ class ProductsAttributesTableSeeder extends Seeder
             [
                 'id'=>1,
                 'product_id'=>'2',
-                'size'=> 'samll',
+                'size'=> 'Small',
                 'price'=> '1000',
                 'stock'=> '10',
                 'sku'=> 'RC001-S',
