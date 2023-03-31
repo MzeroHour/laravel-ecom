@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Frontend\IndexController;
 
 /*
 |--------------------------------------------------------------------------
@@ -125,7 +126,9 @@ Route::prefix('admin/')->namespace('App\Http\Controllers\Admin')->group(function
 
 });
 
-
+Route::namespace('App\Http\Controllers\Frontend')->group(function(){
+    Route::get('/', 'IndexController@index');
+});
 
 
 
