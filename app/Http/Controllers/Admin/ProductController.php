@@ -7,6 +7,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductsAttribute;
+use App\Models\ProductsImage;
 use App\Models\Section;
 use Illuminate\Http\Request;
 use Image;
@@ -51,17 +52,42 @@ class ProductController extends Controller
     {
         //delete Image-----
         $productDeleteImageVideo = Product::where('id', $id)->first();
-        if (!empty($productDeleteImageVideo['product_image'])) {
-            $oldImagePath = 'admin/images/products/' . $productDeleteImageVideo->product_image;
-            @unlink($oldImagePath);
+
+        //Get Product Image Path
+        $smallImagePath = 'admin/images/products/small/';
+        $mediumImagePath = 'admin/images/products/medium/';
+        $largeImagePath = 'admin/images/products/large/';
+
+        //Delete Product Image
+        if (file_exists($smallImagePath . $productDeleteImageVideo->product_image)) {
+            unlink($smallImagePath . $productDeleteImageVideo->product_image);
         }
-        //dd($productDeleteImageVideo);
+        if (file_exists($mediumImagePath . $productDeleteImageVideo->product_image)) {
+            unlink($mediumImagePath . $productDeleteImageVideo->product_image);
+        }
+        if (file_exists($largeImagePath . $productDeleteImageVideo->product_image)) {
+            unlink($largeImagePath . $productDeleteImageVideo->product_image);
+        }
+
+        // if (!empty($productDeleteImageVideo['product_image'])) {
+        //     $oldImagePath = 'admin/images/products/' . $productDeleteImageVideo->product_image;
+        //     @unlink($oldImagePath);
+        // }
 
         //Delete Video
-        if (!empty($productDeleteImageVideo['product_video'])) {
-            $oldVideoPath = 'admin/video/products/' . $productDeleteImageVideo->product_video;
-            @unlink($oldVideoPath);
+        // if (!empty($productDeleteImageVideo['product_video'])) {
+        //     $oldVideoPath = 'admin/video/products/' . $productDeleteImageVideo->product_video;
+        //     @unlink($oldVideoPath);
+        // }
+
+        $path_video = 'admin/video/products/';
+
+        //Delete Product Video in folder if exists
+        if (file_exists($path_video . $productDeleteImageVideo->product_video)) {
+            unlink($path_video . $productDeleteImageVideo->product_video);
         }
+
+
 
         Product::where('id', $id)->delete();
 
@@ -143,14 +169,10 @@ class ProductController extends Controller
 
                     //Insert Video in Product table
                     $product->product_video = $videoName;
-
-
-
                     //Upload Video
 
                 }
             }
-
 
 
             //Save Product Details in product table
@@ -344,4 +366,91 @@ class ProductController extends Controller
         //return redirect()->back()->with('sucess_message', $message);
         return response()->json(['success']);
     }
+
+
+    //Add Product Multiple Image
+    public function addProductImages($id, Request $request){
+          //for nav item acitve color
+          Session::put('page', 'products');
+
+          $product = Product::select('id', 'product_name', 'product_code', 'product_color', 'product_price', 'product_image')->with('images')->find($id);
+
+          if($request->isMethod('post')){
+            $data = $request->all();
+            if($request->hasFile('images')){
+                $images = $request->file('images');
+                foreach($images as $key=>$image){
+
+                    //Generate Temp Image
+                    $image_tmp = Image::make($image);
+
+                     //Get Image Name
+                        $image_name = $image->getClientOriginalName();
+
+                      //Get image Extendion
+                      $extendion = $image->getClientOriginalExtension();
+                      $imageName = $image_name.rand(1111, 9999) . '.' . $extendion;
+                      $largeImagePath = 'admin/images/products/large/' . $imageName;
+                      $mediumImagePath = 'admin/images/products/medium/' . $imageName;
+                      $smallImagePath = 'admin/images/products/small/' . $imageName;
+
+
+                      //Upload the Image
+                      Image::make($image_tmp)->resize(1000, 1000)->save($largeImagePath);
+                      Image::make($image_tmp)->resize(500, 500)->save($mediumImagePath);
+                      Image::make($image_tmp)->resize(250, 250)->save($smallImagePath);
+
+                      $image = new ProductsImage;
+
+                      //Insert Image Name in product table
+                      $image->image = $imageName;
+                      $image->product_id = $id;
+                      $image->status = 1;
+
+                      $image->save();
+                }
+                return redirect()->back()->with('success_message', 'Product Images has been Added Successfully');
+
+            }
+          }
+          return view('admin.product-image.add_product_images')->with(compact('product'));
+    }
+     //update attribute status
+     public function updateImageStatus(Request $request)
+     {
+         if ($request->ajax()) {
+             $data = $request->all();
+             if ($data['status'] == "Active") {
+                 $status = 0;
+             } else {
+                 $status = 1;
+             }
+             ProductsImage::where('id', $data['image_id'])->update(['status' => $status]);
+             return response()->json(['status' => $status, 'image_id' => $data['image_id']]);
+         }
+     }
+
+     //delete Products Images
+     public function deleteImage($id){
+        $deleteImage = ProductsImage::where('id', $id)->first();
+
+         //Get Product Image Path
+         $smallImagePath = 'admin/images/products/small/';
+         $mediumImagePath = 'admin/images/products/medium/';
+         $largeImagePath = 'admin/images/products/large/';
+
+         //Delete Product Image
+         if (file_exists($smallImagePath . $deleteImage->image)) {
+             unlink($smallImagePath . $deleteImage->image);
+         }
+         if (file_exists($mediumImagePath . $deleteImage->image)) {
+             unlink($mediumImagePath . $deleteImage->image);
+         }
+         if (file_exists($largeImagePath . $deleteImage->image)) {
+             unlink($largeImagePath . $deleteImage->image);
+         }
+         ProductsImage::where('id', $id)->delete();
+
+        return response()->json(['success']);
+     }
 }

@@ -102,7 +102,7 @@
                   </label> --}}
                                 </div>
                                 <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                                <button class="btn btn-light"><a href="{{ url()->previous() }}"  style="text-decoration: none; color:black"> Cancel</a></button>
+                                <button type="reset" class="btn btn-light"><a href=""  style="text-decoration: none; color:black"> Cancel</a></button>
                             </form>
                         </div>
                     </div>

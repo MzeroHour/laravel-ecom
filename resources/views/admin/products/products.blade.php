@@ -109,16 +109,19 @@
 
 
                                 <td>
-                                    <a href="{{ url('admin/add-edit-product/'.$product['id']) }}">
+                                    <a href="{{ url('admin/add-edit-product/'.$product['id']) }}" title="Edit Product">
                                         <i style="font-size: 25px; color: #1982c4; text-align: center; display: inline;"  class="mdi mdi-pencil-box "></i>
                                       </a>
-                                      <a href="{{ url('admin/add-edit-attributes/'.$product['id']) }}">
+                                      <a href="{{ url('admin/add-edit-attributes/'.$product['id']) }}" title="Add Product Attribute">
                                         <i style="font-size: 25px; color: #1982c4; text-align: center; display: inline;"  class="mdi mdi-plus-box "></i>
+                                      </a>
+                                      <a href="{{ url('admin/add-product-image/'.$product['id']) }}" title="Add Images">
+                                        <i style="font-size: 25px; color: #1982c4; text-align: center; display: inline;"  class="mdi mdi-folder-multiple-image "></i>
                                       </a>
                                     {{-- <a title="Section" class="confirmDelete" href="{{ url('admin/delete-section/'.$product['id']) }}">
                                         <i style="font-size: 25px; color: #ff595e; text-align: center; display: inline;"  class="mdi mdi-close-box "></i>
                                       </a> --}}
-                                    <a module_id="{{$product['id']}}"  class="confirmDeleteProduct" href="javascript:void(0)">
+                                    <a module_id="{{$product['id']}}"  class="confirmDeleteProduct" href="javascript:void(0)" title="Delete Product">
                                         <i style="font-size: 25px; color: #ff595e; text-align: center; display: inline;"  class="mdi mdi-close-box "></i>
                                       </a>
 
