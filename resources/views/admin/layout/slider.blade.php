@@ -84,7 +84,7 @@
         <a
             @if (Session::get('page')=='sections'  || Session::get('page')=="categories" || Session::get('page')=="products")
             style="background: #4B49AC !important; color: white !important;"
-        @endif
+            @endif
         class="nav-link" data-toggle="collapse" href="#ui-catalogue" aria-expanded="false" aria-controls="ui-catalogue">
           <i class="icon-layout menu-icon"></i>
           <span class="menu-title">Catalogue Manag</span>
@@ -169,6 +169,28 @@
           </ul>
         </div>
       </li>
+      <li class="nav-item">
+        <a
+        @if (Session::get('page')=='banners')
+        style="background: #4B49AC !important; color: white !important;"
+       @endif
+        class="nav-link" data-toggle="collapse" href="#ui-banners" aria-expanded="false" aria-controls="ui-banners">
+          <i class="icon-layout menu-icon"></i>
+          <span class="menu-title">Banner Management</span>
+          <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="ui-banners">
+          <ul class="nav flex-column sub-menu"  style="background: white;  padding-left: 10px !important;">
+              <li class="nav-item"> <a
+                @if (Session::get('page')=='banners')
+                style="background: #7DA0FA !important; color: white !important;"
+                @else
+                 style="background: white !important; color: #4B49AC !important;"
+                @endif
+                class="nav-link" href="{{ url('admin/banners') }}">Banner</a></li>
+          </ul>
+        </div>
+      </li>
 
       <li class="nav-item">
         <a class="nav-link" data-toggle="collapse" href="#ui-users" aria-expanded="false" aria-controls="ui-users">
@@ -185,6 +207,7 @@
         </div>
       </li>
       @endif
+
       <li class="nav-item">
         <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
           <i class="icon-columns menu-icon"></i>

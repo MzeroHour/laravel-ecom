@@ -1,10 +1,15 @@
 $(document).ready(function () {
+
     $(".nav-item").removeClass("active");
     $(".nav-link").removeClass("active");
 
     // call databletable class
     $(document).ready(function () {
         $("#sections").DataTable();
+        $("#categories").DataTable();
+        $("#brands").DataTable();
+        $("#products").DataTable();
+        $("#banners").DataTable();
         // $('#categories').DataTable();
     });
 
@@ -230,7 +235,7 @@ $(document).ready(function () {
         });
     });
 
-    //Updae Product Stats
+    //Updae Product Images Status
     $(document).on("click", ".updateProductImageStatus", function () {
         var status = $(this).children("i").attr("status");
         var image_id = $(this).attr("image_id");
@@ -250,6 +255,37 @@ $(document).ready(function () {
                     );
                 } else if (resp["status"] == 1) {
                     $("#productImage-" + resp.image_id).html(
+                        "<i style='font-size: 25px; color: #1982c4; text-align: center; display: inline;' class='mdi mdi-bookmark-check' status='Active'></i>"
+                    );
+                    //$("a.updateAdminStatus").find("i").removeClass("mdi mdi-bookmark-outline").addClass("mdi mdi-bookmark-check");
+                }
+            },
+            error: function () {
+                alert("Errors");
+            },
+        });
+    });
+
+    //Updae Banner Status
+    $(document).on("click", ".updateBannerStatus", function () {
+        var status = $(this).children("i").attr("status");
+        var banner_id = $(this).attr("banner_id");
+
+        $.ajax({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            type: "post",
+            url: "/admin/update-banner-status",
+            data: { status: status, banner_id: banner_id },
+
+            success: function (resp) {
+                if (resp["status"] == 0) {
+                    $("#banner-" + resp.banner_id).html(
+                        "<i style='font-size: 25px; color: #6c757d; text-align: center; display: inline;' class='mdi mdi-bookmark-outline' status='Inactive'></i>"
+                    );
+                } else if (resp["status"] == 1) {
+                    $("#banner-" + resp.banner_id).html(
                         "<i style='font-size: 25px; color: #1982c4; text-align: center; display: inline;' class='mdi mdi-bookmark-check' status='Active'></i>"
                     );
                     //$("a.updateAdminStatus").find("i").removeClass("mdi mdi-bookmark-outline").addClass("mdi mdi-bookmark-check");
@@ -591,6 +627,45 @@ $(document).ready(function () {
         });
     });
 
+    //Delete Banner Image
+    $(".confirmDeleteBanner").click(function () {
+        var module_id = $(this).attr("module_id");
+        var trObj = $(this);
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                            "content"
+                        ),
+                    },
+                    type: "GET",
+                    url: "/admin/delete-banner/" + module_id,
+                    data: { module_id: module_id },
+                    success: function (resp) {
+                        Swal.fire(
+                            "Deleted!",
+                            "Your file has been deleted.",
+                            "success"
+                        ),
+                            trObj.parents("tr").remove();
+                    },
+                    error: function () {
+                        alert("Error");
+                    },
+                });
+            }
+        });
+    });
+
 
 
     // $('.confirmDelete').click(function(){
@@ -612,7 +687,7 @@ $(document).ready(function () {
     //             'Your file has been deleted.',
     //             'success'
     //           )
-    //           window.location = "/admin/"+module+"/"+module_id;
+    //           window.location = "/admin/delete-"+module+"/"+module_id;
     //         }
     //       });
     // });

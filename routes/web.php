@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Frontend\IndexController;
+use App\Http\Controllers\Admin\BrandController;
 
 /*
 |--------------------------------------------------------------------------
@@ -114,6 +115,13 @@ Route::prefix('admin/')->namespace('App\Http\Controllers\Admin')->group(function
         Route::match(['get', 'post'], 'add-product-image/{id}', 'ProductController@addProductImages');
         Route::post('update-image-status', 'ProductController@updateImageStatus');
         Route::get('delete-image/{id}', 'ProductController@deleteImage');
+
+
+        //Banner
+        Route::get('banners','BannerController@banners');
+        Route::post('update-banner-status', 'BannerController@updateBannerStatus');
+        Route::get('delete-banner/{id}', 'BannerController@deleteBanner');
+        Route::match(['get', 'post'], 'add-edit-banner/{id?}', 'BannerController@addEditBanner');
 
 
 
