@@ -58,7 +58,7 @@ class BannerController extends Controller
             $message = "Banner has been Updated Sucesssfully!";
         }
 
-        //Edit banner
+        //Add and Edit banner
         if($request->isMethod('post')){
             $data = $request->all();
 
